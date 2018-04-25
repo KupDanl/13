@@ -1,0 +1,29 @@
+var fs=require("fs");
+const nodemailer = require('nodemailer');
+fs.writeFileSync("text.txt", "Привет ми ми мир!");
+fs.appendFile("text.txt", "\nПривет МИrok!", function(error){
+	if(error) throw error;        
+        console.log("Запись файла завершена. Содержимое файла:");
+        var data = fs.readFileSync("text.txt", "utf8");
+        console.log(data);
+});
+var fileContent = fs.readFileSync("text.txt", "utf8");
+console.log(fileContent);
+
+let transporter = nodemailer.createTransport({
+	service: 'outlook',
+	auth: {
+		user: 'example@outlook.com', 
+		pass: '' 
+	}
+});
+let mailOptions = {
+	from: 'example@outlook.com', //введите здесь свой email
+	to: 'example@gmail.com',  
+	subject: 'test',
+	text: 'done'
+}
+transporter.sendMail(mailOptions, function (err) {
+	if(err) return console.log(err);
+	console.log('Оправлено');
+});
